@@ -106,9 +106,31 @@ function canQueenCaptureKing(queen, king) {
  *  2, 2, 5   => false
  *  3, 0, 3   => false
  */
-function isIsoscelesTriangle(/* a, b, c */) {
-  throw new Error('Not implemented');
+function isIsoscelesTriangle(a, b, c) {
+  if (a && b && c) {
+    if (isPositive(a) && isPositive(b) && isPositive(c)) {
+      if (a + b > c && a + c > b && b + c > a) {
+        if (a === b || a === c || b === c) {
+          return true;
+        }
+      }
+    }
+  }
+  return false;
 }
+// function isIsoscelesTriangle(a, b, c) {
+//   if (a && b && c) { // исключаю 0
+// исключаю отрицательные значения
+//     if (isPositive(a) && isPositive(b) && isPositive(c)) { // использую решение-функцию объявленную выше (первая задача)
+//       if (a + b > c && a + c > b && b + c > a) {
+//         if (a === b || a === c || b === c) {
+//           return true;
+//         }
+//       }
+//     }
+//   }
+//   return false;
+// }
 
 /**
  * Converts a number to Roman numerals. The number will be between 1 and 39.
