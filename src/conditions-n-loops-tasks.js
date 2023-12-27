@@ -146,9 +146,51 @@ function isIsoscelesTriangle(a, b, c) {
  *  10  => X
  *  26  => XXVI
  */
-function convertToRomanNumerals(/* num */) {
-  throw new Error('Not implemented');
+function convertToRomanNumerals(num) {
+  const romanNum = {
+    1: 'I',
+    4: 'IV',
+    5: 'V',
+    9: 'IX',
+    10: 'X',
+  };
+
+  const keyNumArr = [10, 9, 5, 4, 1];
+  let tempNum = num;
+  let result = '';
+
+  for (let i = 0; i < keyNumArr.length; i += 1) {
+    while (tempNum >= keyNumArr[i]) {
+      result += romanNum[keyNumArr[i]];
+      tempNum -= keyNumArr[i];
+    }
+  }
+
+  return result;
 }
+// function convertToRomanNumerals(num) {
+//   const romanNum = {
+//     1: 'I',
+//     4: 'IV',
+//     5: 'V',
+//     9: 'IX',
+//     10: 'X',
+//   };
+
+//   const keyNumArr = [10, 9, 5, 4, 1]; // ставлю цифры-ключи в порядке убывания
+//   let tempNum = num;
+//   let result = '';
+
+//   for (let i = 0; i < keyNumArr.length; i += 1) {
+// перебираю римские цифры в порядке убывания и проверяю, сколько раз каждая римская цифра помещается в число num
+//     while (tempNum >= keyNumArr[i]) {
+//       result += romanNum[keyNumArr[i]];
+//       tempNum -= keyNumArr[i];
+//     }
+//   }
+
+//   return result;
+// }
 
 /**
  * Converts a number to a string, replacing digits with words.
@@ -165,9 +207,79 @@ function convertToRomanNumerals(/* num */) {
  *  '10,5'    => 'one zero point five'
  *  '1950.2'  => 'one nine five zero point two'
  */
-function convertNumberToString(/* numberStr */) {
-  throw new Error('Not implemented');
+function convertNumberToString(numberStr) {
+  const digitWordObj = {
+    0: 'zero',
+    1: 'one',
+    2: 'two',
+    3: 'three',
+    4: 'four',
+    5: 'five',
+    6: 'six',
+    7: 'seven',
+    8: 'eight',
+    9: 'nine',
+    '.': 'point',
+    ',': 'point',
+    '-': 'minus',
+  };
+
+  let result = '';
+
+  for (let i = 0; i < numberStr.length; i += 1) {
+    switch (numberStr[i]) {
+      case '0':
+      case '1':
+      case '2':
+      case '3':
+      case '4':
+      case '5':
+      case '6':
+      case '7':
+      case '8':
+      case '9':
+      case '.':
+      case ',':
+      case '-':
+        result += digitWordObj[numberStr[i]];
+        break;
+      default:
+        break;
+    }
+
+    if (i !== numberStr.length - 1) {
+      result = `${result} `;
+    }
+  }
+  return result;
 }
+// function convertNumberToString(numberStr) {
+//   const digitWordObj = {
+//     0: 'zero',
+//     1: 'one',
+//     2: 'two',
+//     3: 'three',
+//     4: 'four',
+//     5: 'five',
+//     6: 'six',
+//     7: 'seven',
+//     8: 'eight',
+//     9: 'nine',
+//     '.': 'point',
+//     ',': 'point',
+//     '-': 'minus',
+//   };
+
+//   let result = '';
+
+//   for (let i = 0; i < numberStr.length; i += 1) {
+//     result += digitWordObj[numberStr[i]];
+//     if (i !== numberStr.length - 1) {
+//       result = `${result} `;
+//     }
+//   }
+//   return result;
+// }
 
 /**
  * Determines whether a string is a palindrome.
