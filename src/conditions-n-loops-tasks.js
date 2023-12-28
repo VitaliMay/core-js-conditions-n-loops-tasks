@@ -479,9 +479,42 @@ function getSpiralMatrix(size) {
  *    [7, 8, 9]         [9, 6, 3]
  *  ]                 ]
  */
-function rotateMatrix(/* matrix */) {
-  throw new Error('Not implemented');
+
+function rotateMatrix(matrix) {
+  const resultMatrix = matrix;
+
+  const tempMatrix = [];
+  for (let i = 0; i < matrix[0].length; i += 1) {
+    tempMatrix[i] = [];
+  }
+  for (let i = 0; i < matrix.length; i += 1) {
+    for (let k = 0; k < matrix.length; k += 1) {
+      tempMatrix[i][k] = matrix[matrix.length - 1 - k][i];
+    }
+  }
+  for (let i = 0; i < matrix.length; i += 1) {
+    for (let k = 0; k < matrix.length; k += 1) {
+      resultMatrix[i][k] = tempMatrix[i][k];
+    }
+  }
+
+  return matrix;
 }
+// function rotateMatrix(matrix) {
+// Надо изменять именно matrix. Поэтому в решении пришлось потанцевать с бубном
+//   const resultMatrix = [];
+//   for (let i = 0; i < matrix[0].length; i += 1) {
+//     resultMatrix[i] = [];
+//   }
+
+//   for (let i = 0; i < matrix.length; i += 1) {
+//     for (let k = 0; k < matrix.length; k += 1) {
+//       resultMatrix[i][k] = matrix[matrix.length - 1 - k][i];
+//     }
+//   }
+
+//   return resultMatrix;
+// }
 
 /**
  * Sorts an array of numbers in ascending order in place.
