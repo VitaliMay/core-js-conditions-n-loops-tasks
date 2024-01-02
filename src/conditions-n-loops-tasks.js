@@ -530,9 +530,133 @@ function rotateMatrix(matrix) {
  *  [2, 9, 5, 9]    => [2, 5, 9, 9]
  *  [-2, 9, 5, -3]  => [-3, -2, 5, 9]
  */
-function sortByAsc(/* arr */) {
-  throw new Error('Not implemented');
+
+function sortByAsc(arr01) {
+  const arr = arr01;
+  const stack = [{ low: 0, high: arr.length - 1 }];
+  let index = 0;
+
+  while (index >= 0) {
+    const { low, high } = stack[index];
+    const base = arr[high];
+    let i = low - 1;
+    let j;
+
+    for (j = low; j < high; j += 1) {
+      if (arr[j] < base) {
+        i += 1;
+        const temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+      }
+    }
+
+    const temp = arr[i + 1];
+    arr[i + 1] = arr[high];
+    arr[high] = temp;
+    const baseIndex = i + 1;
+
+    if (baseIndex - 1 > low) {
+      stack[index] = { low, high: baseIndex - 1 };
+      index += 1;
+    }
+    if (baseIndex + 1 < high) {
+      stack[index] = { low: baseIndex + 1, high };
+      index += 1;
+    }
+    index -= 1;
+  }
+
+  return arr01;
 }
+// function sortByAsc(arr01) {
+//   const arr = arr01; // создаю копию ссылки, чтобы не изменять исходный массив
+// извращаюсь со стеком и реструкторизацией из-за ограничений на работу с методами массива
+// засовываю в стек объект с переменными с мин и макс индексами
+//   const stack = [{ low: 0, high: arr.length - 1 }];
+// переменная index для отслеживания текущего элемента стека.
+//   let index = 0;
+
+//   while (index >= 0) {
+// достаю индексы-переменные из стека
+//     const { low, high } = stack[index];
+//     const base = arr[high];
+// Разделения массива на две части относительно базового элемента
+//     let i = low - 1;
+//     let j;
+
+//     for (j = low; j < high; j += 1) {
+//       if (arr[j] < base) {
+//         i += 1;
+// Обмениваем элементы arr[i] и arr[j]
+//         const temp = arr[i];
+//         arr[i] = arr[j];
+//         arr[j] = temp;
+//       }
+//     }
+// Помещаю базовый элемент в правильное положение
+//     const temp = arr[i + 1];
+//     arr[i + 1] = arr[high];
+//     arr[high] = temp;
+//     const baseIndex = i + 1;
+// передвигаюсь по массиву и меняю значения индексов-переменных в стеке
+//     if (baseIndex - 1 > low) {
+//       stack[index] = { low, high: baseIndex - 1 };
+//       index += 1;
+//     }
+//     if (baseIndex + 1 < high) {
+//       stack[index] = { low: baseIndex + 1, high };
+//       index += 1;
+//     }
+//     index -= 1;
+//   }
+
+//   return arr01;
+// }
+
+// со скорость всё впорядке, но надо убрать методы массива
+// function sortByAsc(arr01) {
+//   const arr = arr01;
+//   const stack = [{ low: 0, high: arr.length - 1 }];
+
+//   while (stack.length > 0) {
+//     const { low, high } = stack.pop();
+//     const base = arr[high];
+//     let i = low - 1;
+//     for (let j = low; j < high; j += 1) {
+//       if (arr[j] < base) {
+//         i += 1;
+//         [arr[i], arr[j]] = [arr[j], arr[i]];
+//       }
+//     }
+//     [arr[i + 1], arr[high]] = [arr[high], arr[i + 1]];
+//     const baseIndex = i + 1;
+
+//     if (baseIndex - 1 > low) {
+//       stack.push({ low, high: baseIndex - 1 });
+//     }
+//     if (pivotIndex + 1 < high) {
+//       stack.push({ low: baseIndex + 1, high });
+//     }
+//   }
+
+//   return arr01;
+// }
+
+// function sortByAsc(arr1) {
+//   const arr = arr1;
+//   const n = arr.length;
+//   for (let i = 0; i < n; i += 1) {
+//     for (let j = 0; j < n - i - 1; j += 1) {
+//       if (arr[j] > arr[j + 1]) {
+//         const temp = arr[j];
+//         arr[j] = arr[j + 1];
+//         arr[j + 1] = temp;
+//       }
+//     }
+//   }
+//   return arr1;
+// }
 
 /**
  * Shuffles characters in a string so that the characters with an odd index are moved to the end of the string at each iteration.
@@ -551,9 +675,131 @@ function sortByAsc(/* arr */) {
  *  '012345', 3 => '024135' => '043215' => '031425'
  *  'qwerty', 3 => 'qetwry' => 'qtrewy' => 'qrwtey'
  */
-function shuffleChar(/* str, iterations */) {
-  throw new Error('Not implemented');
+
+function shuffleChar(str, iterations) {
+  let charArray = str;
+
+  const arr = [];
+
+  for (let j = 0; j < iterations; j += 1) {
+    let left = '';
+    let right = '';
+
+    for (let i = 1; i < charArray.length; i += 2) {
+      right += charArray[i];
+      left += charArray[i - 1];
+    }
+
+    charArray = left + right;
+    arr[j] = charArray;
+    if (charArray === str) {
+      return arr[(iterations % (j + 1)) - 1];
+    }
+  }
+
+  return charArray;
 }
+
+// Собираю левую и правую часть стороки (с четными и нечетными индексами)
+// Создаю массив строк для поиска повторений.
+// Как только строка повторяется вывожу результат
+
+// function shuffleChar(str, iterations) {
+//   const len = str.length;
+//   let arr = str.split('');
+//   let resultStr = '';
+
+//   for (let it = 0; it < iterations; it += 1) {
+//     const result = [];
+
+//     for (let i = 0; i < len; i += 1) {
+//       let newPos;
+//       if (i % 2 === 0) {
+//         newPos = Math.floor(i / 2);
+//       } else {
+//         newPos = Math.floor((len + i) / 2);
+//       }
+//       result[newPos % len] = arr[i];
+//     }
+
+//     arr = result;
+//   }
+
+//   for (let i = 0; i < len; i += 1) {
+//     resultStr += arr[i];
+//   }
+
+//   return resultStr;
+// }
+// function shuffleChar(str, iterations) {
+//   const len = str.length;
+//   let arr = str.split('');
+//   let resultStr = '';
+
+//   for (let it = 0; it < iterations; it += 1) {
+//     const result = new Array(len);
+
+//     for (let i = 0; i < len; i += 1) {
+//       let newPos;
+//       if (i % 2 === 0) {
+//         newPos = Math.floor(i / 2);
+//       } else {
+//         newPos = Math.floor((len + i) / 2);
+//       }
+//       result[newPos % len] = arr[i];
+//     }
+
+//     arr = result;
+//   }
+
+//   for (let i = 0; i < len; i += 1) {
+//     resultStr += arr[i];
+//   }
+
+//   return resultStr;
+// }
+// function shuffleChar(str, iterations) {
+//   const n = str.length;
+//   let arr = str.split('');
+//   let resultStr = '';
+
+//   for (let it = 0; it < iterations; it += 1) {
+//     const result = new Array(n);
+
+//     for (let i = 0; i < n; i += 1) {
+//       const newPos = i % 2 === 0 ? Math.floor(i / 2) : Math.floor((n + i) / 2);
+//       result[newPos % n] = arr[i];
+//     }
+
+//     arr = result;
+//   }
+
+//   for (let i = 0; i < n; i += 1) {
+//     resultStr += arr[i];
+//   }
+
+//   return resultStr;
+// }
+// function shuffleChar(str, iterations) {
+//   let charArray = str;
+//   let repeat = iterations;
+
+//   while (repeat > 0) {
+//     let left = '';
+//     let right = '';
+
+//     for (let i = 1; i < charArray.length; i += 2) {
+//       right += charArray[i];
+//       left += charArray[i - 1];
+//     }
+
+//     charArray = left + right;
+
+//     repeat -= 1;
+//   }
+
+//   return charArray;
+// }
 
 /**
  * Returns the nearest largest integer consisting of the digits of the given positive integer.
@@ -572,9 +818,56 @@ function shuffleChar(/* str, iterations */) {
  * @param {number} number The source number
  * @returns {number} The nearest larger number, or original number if none exists.
  */
-function getNearestBigger(/* number */) {
-  throw new Error('Not implemented');
+
+function getNearestBigger(number) {
+  const digitsArr = [];
+
+  let temp01 = number;
+
+  while (temp01) {
+    digitsArr.push(temp01 % 10);
+    temp01 = Math.floor(temp01 / 10);
+  }
+
+  digitsArr.reverse();
+
+  let baseIndex = -1;
+  for (let i = digitsArr.length - 1; i > 0; i -= 1) {
+    if (digitsArr[i] > digitsArr[i - 1]) {
+      baseIndex = i - 1;
+      break;
+    }
+  }
+  if (baseIndex === -1) {
+    return number;
+  }
+
+  let nextLargestIndex = baseIndex + 1;
+  for (let i = baseIndex + 1; i < digitsArr.length; i += 1) {
+    if (
+      digitsArr[i] > digitsArr[baseIndex] &&
+      digitsArr[i] < digitsArr[nextLargestIndex]
+    ) {
+      nextLargestIndex = i;
+    }
+  }
+
+  const temp02 = digitsArr[baseIndex];
+  digitsArr[baseIndex] = digitsArr[nextLargestIndex];
+  digitsArr[nextLargestIndex] = temp02;
+
+  const rightDigitsArr = digitsArr.splice(baseIndex + 1);
+  rightDigitsArr.sort((a, b) => a - b);
+  digitsArr.push(...rightDigitsArr);
+
+  return Number(digitsArr.join(''));
 }
+
+// Преобразую исходное число в массив цифр.
+// Беру индекс первой цифры справа, которая меньше цифры справа от нее. (baseIndex)
+// Если "baseIndex" существует, найдем самую маленькую цифру справа от "baseIndex", которая больше цифры в "baseIndex", и поменяем эти две цифры местами.
+// Cортирую все цифры справа от "baseIndex" по возрастанию.
+// Массив обратно в число и возвращаю его.
 
 module.exports = {
   isPositive,
